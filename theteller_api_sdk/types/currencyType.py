@@ -1,0 +1,15 @@
+ALL_CURRENCY=[
+    "GHANA_CEDIS",
+    "US_DOLLAR",
+    "EURO",
+    "GREAT_BRITISH_POUNDS",
+    "NIGERIAN_NAIRA",
+]
+
+CURRENCY={
+        "GHANA_CEDIS":"GHS",
+        "US_DOLLAR":"USD",
+        "EURO":"EUR",
+        "GREAT_BRITISH_POUNDS":"GBP",
+        "NIGERIAN_NAIRA":"NGN",
+}
