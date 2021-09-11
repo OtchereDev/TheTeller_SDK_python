@@ -19,3 +19,39 @@ class InvalidRedirectUrl(Error):
 
 class InvalidEnvironment(Error):
     pass
+
+class DescriptionRequired(Error):
+    pass
+
+class InvalidTransactionType(Error):
+    pass
+
+class AccountIssuerRequired(Error):
+    pass
+
+class AccountBankRequired(Error):
+    pass
+
+class InvalidPassCode(Error):
+    pass
+
+class ReferenceIdRequired(Error):
+    pass
+
+class InvalidRSwitch(Error):
+    pass
+
+class InvalidCardHolderName(Error):
+    pass
+
+class InvalidCard(Error):
+    pass
+
+class InvalidCurrency(Error):
+    pass
+
+class InvalidTransactionId(Error):
+    pass
+
+class InvalidSubscriberNumber(Error):
+    pass
