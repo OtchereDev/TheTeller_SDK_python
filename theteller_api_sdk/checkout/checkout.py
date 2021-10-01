@@ -1,15 +1,15 @@
 
 import typing
-from core import core
-from helpers.helpers import generateHeader, generateTransactionId
-from errors import errors
+from theteller_api_sdk.core import core
+from theteller_api_sdk.helpers.helpers import generateHeader, generateTransactionId
+from theteller_api_sdk.errors import errors
 from validators import email,url
 import requests
 
 
 class Checkout():
     def __init__(self,client:core.Client)->None:
-        if(client!=core.Client):
+        if(type(client)!=core.Client):
             raise errors.InvalidClient
 
         self.client=client
@@ -49,7 +49,9 @@ class Checkout():
 
         request_data=self.generateRequestBody(description,amount,redirect_url,customer_email)
 
-        request = requests.post(f'{baseUri}/{endpoint}',json=request_data,headers=headers)
+        print("ee: ",request_data, headers,baseUri,endpoint)
+
+        request = requests.post(f'{baseUri}/{endpoint}',data=request_data,headers=headers)
 
         if (request.status_code==200):
             data=request.json()

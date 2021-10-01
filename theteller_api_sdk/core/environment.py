@@ -1,5 +1,5 @@
 import typing
-from errors import errors
+from theteller_api_sdk.errors import errors
 
 ENV_TYPE=typing.Literal["test","production"]
 
