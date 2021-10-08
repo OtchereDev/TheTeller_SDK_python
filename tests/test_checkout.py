@@ -15,5 +15,5 @@ class TestCheckout(unittest.TestCase):
     
     def test_checkout_creation(self):
         checkout = self.checkout.createCheckout("test checkout",10,"https://localhost:8000","oliverotchere4@gmail.com")
-        print("cc: ",checkout)
         self.assertIsNotNone(checkout.get("checkout_url"))
+        

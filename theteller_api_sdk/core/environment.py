@@ -11,6 +11,6 @@ class Environment():
 
     def getBaseUrl(self) -> str:
         if self.type=='test':
-            return 'https://test.theteller.net'
+            return 'test.theteller.net'
         else:
-            return 'https://prod.theteller.net'
+            return 'prod.theteller.net'

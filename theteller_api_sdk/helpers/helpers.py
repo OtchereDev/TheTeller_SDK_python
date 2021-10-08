@@ -9,9 +9,12 @@ def generateTransactionId() -> str:
 
 def generateHeader(self):
         auth_token = f'{self.client.apiuser}:{self.client.API_Key}'
-        auth_token_byte = auth_token.encode("ascii") 
+        message_bytes = auth_token.encode('ascii')
+        base64_bytes = base64.b64encode(message_bytes)
+        base64_message = base64_bytes.decode('ascii')
+         
         return {
-            "content-type":"application/json",
-            "Authorization": f"Basic {base64.b64encode(auth_token_byte).decode()}",
+            "Content-Type":"application/json",
+            "Authorization": f"Basic {base64_message}",
             "Cache-Control": "no-cache"
         }

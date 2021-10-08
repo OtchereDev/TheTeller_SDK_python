@@ -5,6 +5,8 @@ from theteller_api_sdk.helpers.helpers import generateHeader, generateTransactio
 from theteller_api_sdk.errors import errors
 from validators import email,url
 import requests
+import json
+import http.client
 
 
 class Checkout():
@@ -15,11 +17,14 @@ class Checkout():
         self.client=client
 
     def generateRequestBody(self,description,amount,redirect_url,customer_email) -> "dict[str, typing.Any]":
+        init_amount = str(round(amount,2)*100)
+        formatted_amount = init_amount.zfill(12)
+        
         return {
             "merchant_id":self.client.merchant_id,
             "transaction_id":generateTransactionId(),
             "desc":description,
-            "amount":f"{amount}",
+            "amount":formatted_amount,
             "redirect_url":redirect_url,
             "email":customer_email
         }
@@ -43,18 +48,22 @@ class Checkout():
             raise errors.DescriptionRequired
 
         baseUri=self.client.environment.getBaseUrl()
-        endpoint="checkout/initiate"
+        endpoint="/checkout/initiate"
 
         headers= generateHeader(self)
 
         request_data=self.generateRequestBody(description,amount,redirect_url,customer_email)
 
-        print("ee: ",request_data, headers,baseUri,endpoint)
+        conn = http.client.HTTPSConnection(baseUri)
 
-        request = requests.post(f'{baseUri}/{endpoint}',data=request_data,headers=headers)
+        payload=json.dumps(request_data)
+        conn.request("POST", endpoint, payload, headers)
+        res = conn.getresponse()
+        data = res.read().decode()
+        data=json.loads(data)
 
-        if (request.status_code==200):
-            data=request.json()
+        if (data.get("code")==200):
+
             return {
                 "status":data.get("status"),
                 "token": data.get("token"),
@@ -62,8 +71,8 @@ class Checkout():
             }
         
         return  {
-            "status" : request.status_code,
-            "message": f"An Error({request.status_code}), could not handle for checkout"
+            "status" : 400,
+            "message": data
         }
 
 
